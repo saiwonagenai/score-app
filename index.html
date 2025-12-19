@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4人用点数管理アプリ</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        .player { margin: 20px; display: inline-block; width: 200px; }
+        .score { font-size: 48px; margin: 10px 0; }
+        button { padding: 10px 20px; margin: 5px; font-size: 18px; }
+        #total { font-size: 24px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>4人用点数管理アプリ</h1>
+    <div id="players">
+        <div class="player">
+            <h2>Player 1</h2>
+            <div class="score" id="score1">0</div>
+            <button onclick="changeScore(1, 1)">+1</button>
+            <button onclick="changeScore(1, -1)">-1</button>
+        </div>
+        <div class="player">
+            <h2>Player 2</h2>
+            <div class="score" id="score2">0</div>
+            <button onclick="changeScore(2, 1)">+1</button>
+            <button onclick="changeScore(2, -1)">-1</button>
+        </div>
+        <div class="player">
+            <h2>Player 3</h2>
+            <div class="score" id="score3">0</div>
+            <button onclick="changeScore(3, 1)">+1</button>
+            <button onclick="changeScore(3, -1)">-1</button>
+        </div>
+        <div class="player">
+            <h2>Player 4</h2>
+            <div class="score" id="score4">0</div>
+            <button onclick="changeScore(4, 1)">+1</button>
+            <button onclick="changeScore(4, -1)">-1</button>
+        </div>
+    </div>
+    <div id="total">合計点数: 0</div>
+    <button onclick="resetScores()">リセット</button>
+
+    <script>
+        // 初期化: ローカルストレージから点数を読み込む
+        function loadScores() {
+            for (let i = 1; i <= 4; i++) {
+                const score = localStorage.getItem(`score${i}`) || 0;
+                document.getElementById(`score${i}`).textContent = score;
+            }
+            updateTotal();
+        }
+
+        // 点数変更関数
+        function changeScore(player, delta) {
+            const scoreElement = document.getElementById(`score${player}`);
+            let score = parseInt(scoreElement.textContent);
+            score = Math.max(0, Math.min(99, score + delta));
+            scoreElement.textContent = score;
+            localStorage.setItem(`score${player}`, score);
+            updateTotal();
+        }
+
+        // 合計更新
+        function updateTotal() {
+            let total = 0;
+            for (let i = 1; i <= 4; i++) {
+                total += parseInt(document.getElementById(`score${i}`).textContent);
+            }
+            document.getElementById('total').textContent = `合計点数: ${total}`;
+        }
+
+        // リセット
+        function resetScores() {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`score${i}`).textContent = 0;
+                localStorage.setItem(`score${i}`, 0);
+            }
+            updateTotal();
+        }
+
+        // ページロード時に初期化
+        window.onload = loadScores;
+    </script>
+</body>
+</html>
