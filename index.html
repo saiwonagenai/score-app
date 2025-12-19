@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4人用点数管理アプリ</title>
+    <title>点数管理アプリ</title>
     <style>
         * {
             margin: 0;
@@ -12,14 +12,14 @@
         }
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f0f0f0;
             padding: 15px;
             min-height: 100vh;
-            overflow-x: hidden; /* 横スクロール防止 */
+            overflow-x: hidden; /* 横スクロール完全防止 */
         }
         header {
             text-align: center;
-            padding: 15px 0;
+            padding: 16px 0;
             font-size: 24px;
             font-weight: bold;
             background-color: #007bff;
@@ -30,35 +30,38 @@
         .player {
             background-color: white;
             border-radius: 16px;
-            padding: 18px 20px;
-            margin-bottom: 15px;
+            padding: 20px 15px;
+            margin-bottom: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            max-width: 100%;
         }
         .player-name {
-            font-size: 21px;
+            font-size: 20px;
             font-weight: bold;
             color: #333;
-            min-width: 100px;
-            flex-shrink: 0;
+            text-align: center;
+            min-width: 80px;
+            line-height: 1.2; /* 改行許可 */
+            white-space: pre-wrap;
         }
         .controls {
             display: flex;
             align-items: center;
-            gap: 18px;
-            flex-shrink: 0;
+            gap: 15px;
+            flex-wrap: nowrap;
         }
         button {
-            width: 60px;
-            height: 60px;
-            font-size: 32px;
+            width: 55px;
+            height: 55px;
+            font-size: 30px;
             border: none;
             border-radius: 50%;
             color: white;
             cursor: pointer;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
             flex-shrink: 0;
         }
         button.plus {
@@ -73,17 +76,18 @@
             transform: scale(0.95);
         }
         .score {
-            font-size: 56px;
+            font-size: 52px;
             font-weight: bold;
             color: #222;
-            min-width: 110px;
+            min-width: 100px;
             text-align: center;
             order: 2;
             flex-shrink: 0;
         }
         #reset {
             display: block;
-            width: 85%;
+            width: 90%;
+            max-width: 400px;
             margin: 30px auto 20px;
             padding: 18px;
             font-size: 22px;
@@ -98,7 +102,7 @@
     <header>点数管理アプリ</header>
 
     <div class="player">
-        <div class="player-name">プレイヤー1</div>
+        <div class="player-name">プレイヤー<br>1</div>
         <div class="controls">
             <button class="plus" onclick="changeScore(1, 1)">+1</button>
             <div class="score" id="score1">0</div>
@@ -107,7 +111,7 @@
     </div>
 
     <div class="player">
-        <div class="player-name">プレイヤー2</div>
+        <div class="player-name">プレイヤー<br>2</div>
         <div class="controls">
             <button class="plus" onclick="changeScore(2, 1)">+1</button>
             <div class="score" id="score2">0</div>
@@ -116,7 +120,7 @@
     </div>
 
     <div class="player">
-        <div class="player-name">プレイヤー3</div>
+        <div class="player-name">プレイヤー<br>3</div>
         <div class="controls">
             <button class="plus" onclick="changeScore(3, 1)">+1</button>
             <div class="score" id="score3">0</div>
@@ -125,7 +129,7 @@
     </div>
 
     <div class="player">
-        <div class="player-name">プレイヤー4</div>
+        <div class="player-name">プレイヤー<br>4</div>
         <div class="controls">
             <button class="plus" onclick="changeScore(4, 1)">+1</button>
             <div class="score" id="score4">0</div>
