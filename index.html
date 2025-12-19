@@ -13,51 +13,45 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
-            padding: 10px;
+            padding: 15px;
             min-height: 100vh;
         }
         header {
             text-align: center;
             padding: 15px 0;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             background-color: #007bff;
             color: white;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border-radius: 12px;
         }
         .player {
             background-color: white;
             border-radius: 16px;
-            padding: 18px;
+            padding: 20px;
             margin-bottom: 15px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .player h2 {
-            font-size: 20px;
+        .player-name {
+            font-size: 22px;
+            font-weight: bold;
             color: #333;
-            width: 100px;
+            min-width: 110px;
             text-align: left;
         }
         .controls {
             display: flex;
             align-items: center;
-            gap: 20px;
-        }
-        .score {
-            font-size: 60px;
-            font-weight: bold;
-            color: #222;
-            min-width: 120px;
-            text-align: center;
+            gap: 25px;
         }
         button {
             width: 70px;
             height: 70px;
-            font-size: 34px;
+            font-size: 36px;
             border: none;
             border-radius: 50%;
             color: white;
@@ -65,20 +59,30 @@
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
         button.plus {
-            background-color: #28a745;
+            background-color: #28a745; /* 緑 */
+            order: 1;
         }
         button.minus {
-            background-color: #dc3545;
+            background-color: #dc3545; /* 赤 */
+            order: 3;
         }
         button:active {
             transform: scale(0.95);
         }
+        .score {
+            font-size: 64px;
+            font-weight: bold;
+            color: #222;
+            min-width: 130px;
+            text-align: center;
+            order: 2;
+        }
         #reset {
             display: block;
-            width: 80%;
-            margin: 20px auto;
-            padding: 16px;
-            font-size: 20px;
+            width: 85%;
+            margin: 30px auto 20px;
+            padding: 18px;
+            font-size: 22px;
             border: none;
             border-radius: 12px;
             background-color: #6c757d;
@@ -90,38 +94,38 @@
     <header>点数管理アプリ</header>
 
     <div class="player">
-        <h2>プレイヤー1</h2>
+        <div class="player-name">プレイヤー1</div>
         <div class="controls">
-            <button class="minus" onclick="changeScore(1, -1)">-1</button>
-            <div class="score" id="score1">0</div>
             <button class="plus" onclick="changeScore(1, 1)">+1</button>
+            <div class="score" id="score1">0</div>
+            <button class="minus" onclick="changeScore(1, -1)">-1</button>
         </div>
     </div>
 
     <div class="player">
-        <h2>プレイヤー2</h2>
+        <div class="player-name">プレイヤー2</div>
         <div class="controls">
-            <button class="minus" onclick="changeScore(2, -1)">-1</button>
-            <div class="score" id="score2">0</div>
             <button class="plus" onclick="changeScore(2, 1)">+1</button>
+            <div class="score" id="score2">0</div>
+            <button class="minus" onclick="changeScore(2, -1)">-1</button>
         </div>
     </div>
 
     <div class="player">
-        <h2>プレイヤー3</h2>
+        <div class="player-name">プレイヤー3</div>
         <div class="controls">
-            <button class="minus" onclick="changeScore(3, -1)">-1</button>
-            <div class="score" id="score3">0</div>
             <button class="plus" onclick="changeScore(3, 1)">+1</button>
+            <div class="score" id="score3">0</div>
+            <button class="minus" onclick="changeScore(3, -1)">-1</button>
         </div>
     </div>
 
     <div class="player">
-        <h2>プレイヤー4</h2>
+        <div class="player-name">プレイヤー4</div>
         <div class="controls">
-            <button class="minus" onclick="changeScore(4, -1)">-1</button>
-            <div class="score" id="score4">0</div>
             <button class="plus" onclick="changeScore(4, 1)">+1</button>
+            <div class="score" id="score4">0</div>
+            <button class="minus" onclick="changeScore(4, -1)">-1</button>
         </div>
     </div>
 
@@ -147,7 +151,7 @@
             if (confirm("すべての点数を0にリセットしますか？")) {
                 for (let i = 1; i <= 4; i++) {
                     document.getElementById(`score${i}`).textContent = 0;
-                    localStorage.setItem(`score${i}`, 0);
+                    localStorage.setItem(`score${player}`, score);
                 }
             }
         }
