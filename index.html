@@ -2,86 +2,159 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>4人用点数管理アプリ</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
-        .player { margin: 20px; display: inline-block; width: 200px; }
-        .score { font-size: 48px; margin: 10px 0; }
-        button { padding: 10px 20px; margin: 5px; font-size: 18px; }
-        #total { font-size: 24px; margin-top: 20px; }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        h1 {
+            font-size: 22px;
+            margin: 10px 0;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .players-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+        .player {
+            background-color: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 10px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .player h2 {
+            margin: 0 0 15px 0;
+            font-size: 20px;
+            color: #333;
+        }
+        .score {
+            font-size: 72px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #222;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+        button {
+            width: 90px;
+            height: 90px;
+            font-size: 40px;
+            border: none;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        button.minus {
+            background-color: #dc3545;
+        }
+        #reset {
+            margin: 15px 20px;
+            padding: 14px;
+            font-size: 20px;
+            border: none;
+            border-radius: 12px;
+            background-color: #6c757d;
+            color: white;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
-    <h1>4人用点数管理アプリ</h1>
-    <div id="players">
+    <h1>点数管理アプリ</h1>
+
+    <div class="players-container">
         <div class="player">
-            <h2>Player 1</h2>
+            <h2>プレイヤー1</h2>
             <div class="score" id="score1">0</div>
-            <button onclick="changeScore(1, 1)">+1</button>
-            <button onclick="changeScore(1, -1)">-1</button>
+            <div class="buttons">
+                <button class="minus" onclick="changeScore(1, -1)">-1</button>
+                <button onclick="changeScore(1, 1)">+1</button>
+            </div>
         </div>
+
         <div class="player">
-            <h2>Player 2</h2>
+            <h2>プレイヤー2</h2>
             <div class="score" id="score2">0</div>
-            <button onclick="changeScore(2, 1)">+1</button>
-            <button onclick="changeScore(2, -1)">-1</button>
+            <div class="buttons">
+                <button class="minus" onclick="changeScore(2, -1)">-1</button>
+                <button onclick="changeScore(2, 1)">+1</button>
+            </div>
         </div>
+
         <div class="player">
-            <h2>Player 3</h2>
+            <h2>プレイヤー3</h2>
             <div class="score" id="score3">0</div>
-            <button onclick="changeScore(3, 1)">+1</button>
-            <button onclick="changeScore(3, -1)">-1</button>
+            <div class="buttons">
+                <button class="minus" onclick="changeScore(3, -1)">-1</button>
+                <button onclick="changeScore(3, 1)">+1</button>
+            </div>
         </div>
+
         <div class="player">
-            <h2>Player 4</h2>
+            <h2>プレイヤー4</h2>
             <div class="score" id="score4">0</div>
-            <button onclick="changeScore(4, 1)">+1</button>
-            <button onclick="changeScore(4, -1)">-1</button>
+            <div class="buttons">
+                <button class="minus" onclick="changeScore(4, -1)">-1</button>
+                <button onclick="changeScore(4, 1)">+1</button>
+            </div>
         </div>
     </div>
-    <div id="total">合計点数: 0</div>
-    <button onclick="resetScores()">リセット</button>
+
+    <button id="reset" onclick="resetScores()">全リセット</button>
 
     <script>
-        // 初期化: ローカルストレージから点数を読み込む
         function loadScores() {
             for (let i = 1; i <= 4; i++) {
                 const score = localStorage.getItem(`score${i}`) || 0;
                 document.getElementById(`score${i}`).textContent = score;
             }
-            updateTotal();
         }
 
-        // 点数変更関数
         function changeScore(player, delta) {
             const scoreElement = document.getElementById(`score${player}`);
             let score = parseInt(scoreElement.textContent);
             score = Math.max(0, Math.min(99, score + delta));
             scoreElement.textContent = score;
             localStorage.setItem(`score${player}`, score);
-            updateTotal();
         }
 
-        // 合計更新
-        function updateTotal() {
-            let total = 0;
-            for (let i = 1; i <= 4; i++) {
-                total += parseInt(document.getElementById(`score${i}`).textContent);
-            }
-            document.getElementById('total').textContent = `合計点数: ${total}`;
-        }
-
-        // リセット
         function resetScores() {
-            for (let i = 1; i <= 4; i++) {
-                document.getElementById(`score${i}`).textContent = 0;
-                localStorage.setItem(`score${i}`, 0);
+            if (confirm("すべての点数を0にリセットしますか？")) {
+                for (let i = 1; i <= 4; i++) {
+                    document.getElementById(`score${i}`).textContent = 0;
+                    localStorage.setItem(`score${i}`, 0);
+                }
             }
-            updateTotal();
         }
 
-        // ページロード時に初期化
         window.onload = loadScores;
     </script>
 </body>
